@@ -20,6 +20,8 @@ module ShippingOptions
       attention_name: 'Sergie Bryn',
       phone_number: '0207 031 3000',
       address_line_1: '1 St Giles High Street',
+      address_line_2: 'third floor',
+      address_line_3: 'appartment number 13',
       city: 'London',
       state: 'England',
       postal_code: 'WC2H 8AG',
