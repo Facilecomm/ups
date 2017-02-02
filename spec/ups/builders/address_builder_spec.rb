@@ -1,4 +1,5 @@
 require "spec_helper"
+require 'byebug'
 
 describe UPS::Builders::AddressBuilder do
   describe "when passed a US Address" do
@@ -92,6 +93,27 @@ describe UPS::Builders::AddressBuilder do
       subject { UPS::Builders::AddressBuilder.new address_hash.merge({ state: '' }) }
       it "should throw an exception" do
         proc { subject }.must_raise UPS::Exceptions::InvalidAttributeError
+      end
+    end
+  end
+
+  describe "generate an expected xml" do
+    let(:address_hash) { {
+      address_line_1: 'Googleplex',
+      address_line_2: '1600 Amphitheatre Parkway',
+      address_line_3: 'Google Store',
+      city: 'Mountain View',
+      state: 'California',
+      postal_code: '94043',
+      country: 'US',
+      email_address: 'nobody@example.org'
+    } }
+
+    describe "with a standard address" do
+      subject { UPS::Builders::AddressBuilder.new address_hash }
+
+      it "build correctly the xml" do
+        Ox.dump(subject.to_xml).must_equal File.open('spec/support/expected_address.xml','rb', &:read)
       end
     end
   end
