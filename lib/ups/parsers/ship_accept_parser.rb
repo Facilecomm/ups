@@ -7,9 +7,11 @@ module UPS
       attr_accessor :graphic_image,
                     :graphic_extension,
                     :html_image,
-                    :tracking_number
+                    :tracking_number,
+                    :raw_img
 
       def value(value)
+        @raw_img = value
         parse_graphic_image(value)
         parse_html_image(value)
         parse_tracking_number(value)

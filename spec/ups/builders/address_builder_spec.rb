@@ -117,4 +117,48 @@ describe UPS::Builders::AddressBuilder do
       end
     end
   end
+
+  describe "address_line_2 can be nil" do
+    let(:address_hash) { {
+      address_line_1: 'Googleplex',
+      address_line_2: nil,
+      address_line_3: 'Google Store',
+      city: 'Mountain View',
+      state: 'California',
+      postal_code: '94043',
+      country: 'US',
+      email_address: 'nobody@example.org'
+    } }
+
+    describe "with a standard address" do
+      subject { UPS::Builders::AddressBuilder.new address_hash }
+
+      it "build correctly the xml" do
+        expected_file = File.open('spec/support/expected_address_without_line_2.xml','rb', &:read)
+        Ox.dump(subject.to_xml).must_equal expected_file
+      end
+    end
+  end
+
+  describe "address_line_2 && address_line_3 can be nil" do
+    let(:address_hash) { {
+      address_line_1: 'Googleplex',
+      address_line_2: nil,
+      address_line_3: nil,
+      city: 'Mountain View',
+      state: 'California',
+      postal_code: '94043',
+      country: 'US',
+      email_address: 'nobody@example.org'
+    } }
+
+    describe "with a standard address" do
+      subject { UPS::Builders::AddressBuilder.new address_hash }
+
+      it "build correctly the xml" do
+        expected_file = File.open('spec/support/expected_address_without_line_2_3.xml','rb', &:read)
+        Ox.dump(subject.to_xml).must_equal expected_file
+      end
+    end
+  end
 end

@@ -80,7 +80,7 @@ module UPS
       #
       # @return [Ox::Element] XML representation of address_line_2 address part
       def address_line_2
-        data = (opts.key? :address_line_2) ? opts[:address_line_2][0..34] : ''
+        data = opts[:address_line_2].nil? ? '' : opts[:address_line_2][0..34]
         element_with_value('AddressLine2', data)
       end
 
@@ -88,7 +88,7 @@ module UPS
       #
       # @return [Ox::Element] XML representation of address_line_3 address part
       def address_line_3
-        data = (opts.key? :address_line_3) ? opts[:address_line_3][0..34] : ''
+        data = opts[:address_line_3].nil? ? '' : opts[:address_line_3][0..34]
         element_with_value('AddressLine3', data)
       end
 
