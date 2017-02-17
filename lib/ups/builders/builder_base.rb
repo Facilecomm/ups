@@ -17,6 +17,7 @@ module UPS
     class BuilderBase
       include Ox
       include Exceptions
+      include Tools
 
       attr_accessor :document,
                     :root,
@@ -124,6 +125,8 @@ module UPS
           org << packaging_type
           org << element_with_value('Description', 'Rate')
           org << package_weight(opts[:weight], opts[:unit])
+          pso = opts[:package_service_options]
+          org << package_service_options(pso) unless pso.nil?
         end
       end
 
@@ -183,6 +186,35 @@ module UPS
         Element.new('UnitOfMeasurement').tap do |org|
           org << element_with_value('Code', unit.to_s)
         end
+      end
+
+      # pso_opts = opts[:package_service_options]
+      # it allows to add further package service options xml
+      #this is build on the same structure as the XML
+      def package_service_options(pso_opts)
+        insurance_options = pso_opts[:insured_value]
+        Element.new('PackageServiceOptions').tap do |pck_serv_opts|
+          pck_serv_opts << insured_value(insurance_options) unless insurance_options.nil?
+        end
+      end
+
+      INSURED_NEEDED_PATH = [
+        %i(type code),
+        :currency_code,
+        :monetary_value
+      ].freeze
+
+
+      # exemple : {:type=>{:code=>"EVS", :description=>"some_description"},
+      #            :currency_code=>"EUR",
+      #            :monetary_value=>"1650"}
+      def insured_value(insurance_options)
+        check_params(INSURED_NEEDED_PATH, opts: insurance_options, name: 'insured_value')
+        XmlBuilderFromHash.new(
+          hash: insurance_options,
+          optional_fields: :description,
+          root: 'InsuredValue'
+        ).to_ox
       end
 
       def element_with_value(name, value)

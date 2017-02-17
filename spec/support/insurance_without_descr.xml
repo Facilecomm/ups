@@ -1,0 +1,28 @@
+
+<AccessRequest/>
+<my_std_root>
+  <Shipment>
+    <Package>
+      <PackagingType>
+        <Code>02</Code>
+        <Description>Customer Supplied</Description>
+      </PackagingType>
+      <Description>Rate</Description>
+      <PackageWeight>
+        <UnitOfMeasurement>
+          <Code>KGS</Code>
+        </UnitOfMeasurement>
+        <Weight>0.5</Weight>
+      </PackageWeight>
+      <PackageServiceOptions>
+        <InsuredValue>
+          <Type>
+            <Code>EVS</Code>
+          </Type>
+          <CurrencyCode>EUR</CurrencyCode>
+          <MonetaryValue>1650</MonetaryValue>
+        </InsuredValue>
+      </PackageServiceOptions>
+    </Package>
+  </Shipment>
+</my_std_root>

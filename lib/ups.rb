@@ -5,6 +5,7 @@ module UPS
   autoload :Version,               'ups/version'
   autoload :Connection,            'ups/connection'
   autoload :Exceptions,            'ups/exceptions'
+  autoload :Tools,                 'ups/tools'
 
   autoload :Data,                  'ups/data'
   module Data

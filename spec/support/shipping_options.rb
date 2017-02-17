@@ -36,4 +36,54 @@ module ShippingOptions
       unit: 'KGS'
     }
   end
+
+  def package_with_insurance
+    {
+      weight: '0.5',
+      unit: 'KGS',
+      package_service_options: {
+        insured_value: {
+          type: {
+            code: 'EVS',
+            description: 'some_description'
+          },
+          currency_code: 'EUR',
+          monetary_value: '1650'
+        }
+      }
+    }
+  end
+
+  def package_with_insurance_incomplete
+    {
+      weight: '0.5',
+      unit: 'KGS',
+      package_service_options: {
+        insured_value: {
+          type: {
+            description: 'some_description'
+          },
+          currency_code: 'EUR',
+          monetary_value: '1650'
+        }
+      }
+    }
+  end
+
+  def package_insurance_without_descr
+    {
+      weight: '0.5',
+      unit: 'KGS',
+      package_service_options: {
+        insured_value: {
+          type: {
+            code: 'EVS'
+          },
+          currency_code: 'EUR',
+          monetary_value: '1650'
+        }
+      }
+    }
+  end
+
 end
