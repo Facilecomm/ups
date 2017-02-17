@@ -12,7 +12,7 @@ module UPS
 
       def value(value)
         @raw_img = value
-        parse_graphic_image(value)
+        parse_graphic_image(value) unless self.graphic_image
         parse_html_image(value)
         parse_tracking_number(value)
         parse_graphic_extension(value)
