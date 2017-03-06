@@ -1,5 +1,4 @@
-require "spec_helper"
-require 'byebug'
+require 'spec_helper'
 
 describe UPS::Builders::AddressBuilder do
   describe "when passed a US Address" do

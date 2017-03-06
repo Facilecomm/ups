@@ -126,7 +126,7 @@ module UPS
           org << element_with_value('Description', 'Rate')
           org << package_weight(opts[:weight], opts[:unit])
           pso = opts[:package_service_options]
-          org << package_service_options(pso) unless pso.nil?
+          org << package_service_options(pso) if pso
         end
       end
 
@@ -190,11 +190,11 @@ module UPS
 
       # pso_opts = opts[:package_service_options]
       # it allows to add further package service options xml
-      #this is build on the same structure as the XML
+      # this is built on the same structure as the XML
       def package_service_options(pso_opts)
         insurance_options = pso_opts[:insured_value]
         Element.new('PackageServiceOptions').tap do |pck_serv_opts|
-          pck_serv_opts << insured_value(insurance_options) unless insurance_options.nil?
+          pck_serv_opts << insured_value(insurance_options) if insurance_options
         end
       end
 
@@ -210,11 +210,11 @@ module UPS
       #            :monetary_value=>"1650"}
       def insured_value(insurance_options)
         check_params(INSURED_NEEDED_PATH, opts: insurance_options, name: 'insured_value')
-        XmlBuilderFromHash.new(
+        GenericXMLBuilder.new(
           hash: insurance_options,
           optional_fields: :description,
           root: 'InsuredValue'
-        ).to_ox
+        ).to_ox_element
       end
 
       def element_with_value(name, value)
