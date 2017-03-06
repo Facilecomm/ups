@@ -132,9 +132,9 @@ describe UPS::Builders::AddressBuilder do
     describe "with a standard address" do
       subject { UPS::Builders::AddressBuilder.new address_hash }
 
-      it "build correctly the xml" do
-        expected_file = File.open('spec/support/expected_address_without_line_2.xml','rb', &:read)
-        Ox.dump(subject.to_xml).must_equal expected_file
+      it "builds the xml correctly" do
+        expected_xml = File.open('spec/support/expected_address_without_line_2.xml','rb', &:read)
+        Ox.dump(subject.to_xml).must_equal expected_xml
       end
     end
   end

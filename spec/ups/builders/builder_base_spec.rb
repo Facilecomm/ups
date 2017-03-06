@@ -4,14 +4,14 @@ class UPS::Builders::TestBuilderBase < Minitest::Test
   include SchemaPath
   include ShippingOptions
 
-  def test_validates_expected_insurrance
+  def test_validates_expected_insurance
     @builder_base = UPS::Builders::BuilderBase.new('my_std_root') do |builder|
       builder.add_package package_with_insurance
     end
     assert_equal expected_package, @builder_base.to_xml
   end
 
-  def test_validates_expected_raise_incomplete_insurrance
+  def test_validates_expected_raise_incomplete_insurance
     assert_raises UPS::Tools::InvalidOptsParams do
       @builder_base = UPS::Builders::BuilderBase.new('my_std_root') do |builder|
         builder.add_package package_with_insurance_incomplete
