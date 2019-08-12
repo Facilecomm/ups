@@ -6,6 +6,7 @@ class RatesNegotatiedTest < Minitest::Test
   include UrlStubbing
 
   def setup
+    @encoding = 'ISO-8851-1'
     Typhoeus::Expectation.clear
   end
 
@@ -20,6 +21,13 @@ class RatesNegotatiedTest < Minitest::Test
     assert_equal expected_status_type, track.tracking_status_type
     assert_equal 'KB', track.tracking_status_code
     assert_equal expected_datetime, track.tracking_status_datetime
+  end
+
+  def test_return_a_track_with_force_encodage
+    @encoding = 'UTF-8'
+    stub_tracking_url 'track_success_utf8.xml'
+    assert_equal '1ZR35W086819448498', track.tracking_number
+    assert_equal description_with_utf8, track.tracking_status_type
   end
 
   private
@@ -50,7 +58,7 @@ class RatesNegotatiedTest < Minitest::Test
   end
 
   def server
-    @server ||= UPS::Connection.new(test_mode: true)
+    @server ||= UPS::Connection.new(test_mode: true, encoding: @encoding)
   end
 
   def expected_datetime
@@ -59,5 +67,9 @@ class RatesNegotatiedTest < Minitest::Test
 
   def expected_status_type
     { code: 'D', description: 'DELIVERED' }
+  end
+
+  def description_with_utf8
+    { code: 'D', description: 'Delivered to UPS Access Point™' }
   end
 end

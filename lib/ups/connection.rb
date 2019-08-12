@@ -25,7 +25,8 @@ module UPS
     TRACKING_PATH = '/ups.app/xml/Track'
 
     DEFAULT_PARAMS = {
-      test_mode: false
+      test_mode: false,
+      encoding: nil
     }.freeze
 
     # Initializes a new {Connection} object
@@ -35,6 +36,7 @@ module UPS
     #   requests to the UPS URL
     def initialize(params = {})
       params = DEFAULT_PARAMS.merge(params)
+      Ox.default_options = { encoding: params[:encoding] }
       self.url = params[:test_mode] ? TEST_URL : LIVE_URL
     end
 
